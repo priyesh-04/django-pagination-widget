@@ -1,0 +1,3 @@
+Django>=3.2
+# Add the local package for development
+-e ../django_pagination_widget

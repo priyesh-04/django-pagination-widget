@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Django Pagination Widget Demo</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f8f9fa;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .item {
+            background: #f8f9fa;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border-left: 4px solid #007bff;
+        }
+        .item h3 {
+            margin: 0 0 5px 0;
+            color: #007bff;
+        }
+        .item p {
+            margin: 5px 0;
+            color: #666;
+        }
+        .demo-info {
+            background: #e3f2fd;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 20px 0;
+            border-left: 4px solid #2196f3;
+        }
+        .code-block {
+            background: #f5f5f5;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            margin: 10px 0;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎯 Django Pagination Widget Demo</h1>
+
+        <div class="demo-info">
+            <h3>📖 About This Demo</h3>
+            <p>This page demonstrates the Django Pagination Widget in action. The widget provides:</p>
+            <ul>
+                <li>✅ Material Design styling</li>
+                <li>✅ Interactive JavaScript behavior</li>
+                <li>✅ Smart ellipsis for large page ranges</li>
+                <li>✅ Responsive design</li>
+                <li>✅ Accessibility features</li>
+            </ul>
+        </div>
+
+        <h2>📋 Items (Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }})</h2>
+
+        {% for item in items %}
+        <div class="item">
+            <h3>{{ item.name }}</h3>
+            <p><strong>Created:</strong> {{ item.created_at|date:"M d, Y H:i" }}</p>
+            <p><strong>ID:</strong> {{ item.id }}</p>
+        </div>
+        {% endfor %}
+
+        <!-- Django Pagination Widget -->
+        {% load pagination_tags %}
+        {% pagination_widget page_obj %}
+
+        <div class="demo-info">
+            <h3>💡 Usage Example</h3>
+            <p>In your Django templates, simply use:</p>
+            <div class="code-block">
+{% verbatim %}
+{% load pagination_tags %}
+{% pagination_widget page_obj %}
+{% endverbatim %}
+            </div>
+
+            <p>Or with a custom page range:</p>
+            <div class="code-block">
+{% verbatim %}
+{% pagination_widget page_obj custom_page_range %}
+{% endverbatim %}
+            </div>
+        </div>
+
+        <div class="demo-info">
+            <h3>🔧 Features Demonstrated</h3>
+            <ul>
+                <li><strong>Smart Ellipsis:</strong> Notice how page numbers are hidden with "…" when there are many pages</li>
+                <li><strong>Active State:</strong> Current page is highlighted</li>
+                <li><strong>Navigation:</strong> Previous/Next buttons with Material Icons</li>
+                <li><strong>Responsive:</strong> Try resizing your browser window</li>
+                <li><strong>Accessibility:</strong> Proper ARIA labels and semantic HTML</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

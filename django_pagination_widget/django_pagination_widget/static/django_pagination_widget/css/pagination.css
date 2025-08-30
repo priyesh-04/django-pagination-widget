@@ -1,0 +1,125 @@
+/* Django Pagination Widget Styles */
+
+.pagination {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 1rem 0;
+    flex-wrap: wrap;
+}
+
+.pagination .step-links {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.pagination span.current {
+    color: #666;
+    font-size: 0.875rem;
+    font-weight: 500;
+    margin-left: auto;
+}
+
+.page-change-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: #fff;
+    color: #666;
+    border: 1px solid #e1e5e9;
+    padding: 0.5rem 0.75rem;
+    margin: 0 0.25rem 0.5rem 0;
+    font-size: 0.875rem;
+    text-decoration: none;
+    border-radius: 0.25rem;
+    transition: all 0.2s ease;
+    min-width: 2.5rem;
+    height: 2.5rem;
+}
+
+.page-change-btn:hover {
+    border-color: #007bff;
+    background: #007bff;
+    color: #fff;
+    text-decoration: none;
+}
+
+.page-change-btn.active {
+    border-color: #28a745;
+    background: #28a745;
+    color: #fff;
+    font-weight: 500;
+}
+
+.page-change-btn i {
+    font-size: 1rem;
+    margin: 0 0.25rem;
+}
+
+.page-change-btn.ellipsis {
+    border: none;
+    background: transparent;
+    color: #999;
+    cursor: default;
+    font-size: 1.25rem;
+    line-height: 1;
+    pointer-events: none;
+}
+
+.page-change-btn.before-dots:hover,
+.page-change-btn.after-dots:hover {
+    background: transparent;
+    color: #999;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .pagination {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .pagination span.current {
+        margin-left: 0;
+        margin-top: 0.5rem;
+    }
+
+    .page-change-btn {
+        margin: 0 0.125rem 0.25rem 0;
+        padding: 0.375rem 0.5rem;
+        min-width: 2rem;
+        height: 2rem;
+        font-size: 0.75rem;
+    }
+}
+
+/* Dark theme support */
+@media (prefers-color-scheme: dark) {
+    .page-change-btn {
+        background: #2d3748;
+        color: #e2e8f0;
+        border-color: #4a5568;
+    }
+
+    .page-change-btn:hover {
+        border-color: #63b3ed;
+        background: #63b3ed;
+        color: #fff;
+    }
+
+    .page-change-btn.active {
+        border-color: #48bb78;
+        background: #48bb78;
+        color: #fff;
+    }
+
+    .pagination span.current {
+        color: #a0aec0;
+    }
+
+    .page-change-btn.before-dots,
+    .page-change-btn.after-dots {
+        color: #718096;
+    }
+}
