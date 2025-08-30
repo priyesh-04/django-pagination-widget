@@ -3,17 +3,23 @@
  * Handles dynamic pagination behavior with ellipsis
  */
 
-(function($) {
+(function() {
     'use strict';
 
-    $(document).ready(function() {
+    // Wait for DOM to be ready
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initializePagination);
+    } else {
         initializePagination();
-    });
+    }
 
     function initializePagination() {
         // Add classes to first and last page buttons
-        $(".page-num-btn").first().addClass('first-page-btn');
-        $(".page-num-btn").last().addClass('last-page-btn');
+        const pageButtons = document.querySelectorAll('.page-num-btn');
+        if (pageButtons.length > 0) {
+            pageButtons[0].classList.add('first-page-btn');
+            pageButtons[pageButtons.length - 1].classList.add('last-page-btn');
+        }
 
         // Set active page based on current URL
         setActivePage();
@@ -23,42 +29,60 @@
     }
 
     function setActivePage() {
-        var currentSearch = window.location.search;
+        const currentSearch = window.location.search;
 
         // If no query parameters, activate first page
         if (currentSearch === '' || currentSearch === '?page=1') {
-            $(".page-num-btn").first().addClass('active');
+            const firstButton = document.querySelector('.page-num-btn');
+            if (firstButton) {
+                firstButton.classList.add('active');
+            }
             return;
         }
 
         // Find and activate the current page button
-        $(".page-num-btn").each(function() {
-            if ($(this).attr('href') === currentSearch) {
-                $(this).addClass('active');
-                return false; // Break the loop
+        const pageButtons = document.querySelectorAll('.page-num-btn');
+        pageButtons.forEach(function(button) {
+            if (button.getAttribute('href') === currentSearch) {
+                button.classList.add('active');
             }
         });
     }
 
     function applyEllipsis() {
-        var $activeBtn = $(".page-num-btn.active");
-        if ($activeBtn.length === 0) return;
+        const activeBtn = document.querySelector('.page-num-btn.active');
+        if (!activeBtn) return;
 
-        var totalPages = $(".page-num-btn").length;
-        var activeIndex = $activeBtn.index();
-        var $pageBtns = $(".page-num-btn");
+        const pageButtons = document.querySelectorAll('.page-num-btn');
+        const totalPages = pageButtons.length;
 
         // Only apply ellipsis if we have more than 7 pages
         if (totalPages <= 7) return;
 
+        // Find the index of the active button
+        let activeIndex = -1;
+        pageButtons.forEach(function(button, index) {
+            if (button.classList.contains('active')) {
+                activeIndex = index;
+            }
+        });
+
         // Add ellipsis before active page if not in first 3 positions
         if (activeIndex > 2) {
-            $activeBtn.before('<span class="page-change-btn before-dots">…</span>');
+            const ellipsisSpan = document.createElement('span');
+            ellipsisSpan.className = 'page-change-btn before-dots';
+            ellipsisSpan.textContent = '…';
+            ellipsisSpan.setAttribute('aria-hidden', 'true');
+            activeBtn.parentNode.insertBefore(ellipsisSpan, activeBtn);
         }
 
         // Add ellipsis after active page if not in last 3 positions
         if (activeIndex < totalPages - 3) {
-            $activeBtn.after('<span class="page-change-btn after-dots">…</span>');
+            const ellipsisSpan = document.createElement('span');
+            ellipsisSpan.className = 'page-change-btn after-dots';
+            ellipsisSpan.textContent = '…';
+            ellipsisSpan.setAttribute('aria-hidden', 'true');
+            activeBtn.parentNode.insertAfter(ellipsisSpan, activeBtn);
         }
 
         // Hide buttons between ellipsis and boundaries
@@ -66,28 +90,72 @@
     }
 
     function hideButtonsBetweenEllipsis() {
-        var $beforeDots = $(".before-dots");
-        var $afterDots = $(".after-dots");
+        const beforeDots = document.querySelector('.before-dots');
+        const afterDots = document.querySelector('.after-dots');
 
         // Hide buttons before the "before-dots"
-        if ($beforeDots.length > 0) {
-            $beforeDots.prevUntil('.first-page-btn').hide();
+        if (beforeDots) {
+            hideElementsBetween(beforeDots, '.first-page-btn', 'previous');
         }
 
         // Hide buttons after the "after-dots"
-        if ($afterDots.length > 0) {
-            $afterDots.nextUntil('.last-page-btn').hide();
+        if (afterDots) {
+            hideElementsBetween(afterDots, '.last-page-btn', 'next');
         }
     }
+
+    function hideElementsBetween(referenceElement, boundarySelector, direction) {
+        const boundary = document.querySelector(boundarySelector);
+        if (!boundary) return;
+
+        let currentElement = referenceElement;
+        const elementsToHide = [];
+
+        // Collect elements to hide
+        while (currentElement) {
+            if (direction === 'previous') {
+                currentElement = currentElement.previousElementSibling;
+                if (currentElement === boundary) break;
+                if (currentElement && currentElement.classList.contains('page-num-btn')) {
+                    elementsToHide.push(currentElement);
+                }
+            } else {
+                currentElement = currentElement.nextElementSibling;
+                if (currentElement === boundary) break;
+                if (currentElement && currentElement.classList.contains('page-num-btn')) {
+                    elementsToHide.push(currentElement);
+                }
+            }
+        }
+
+        // Hide the collected elements
+        elementsToHide.forEach(function(element) {
+            element.style.display = 'none';
+        });
+    }
+
+    // Utility function to insert after element (since insertAfter doesn't exist)
+    Element.prototype.insertAfter = function(newNode, referenceNode) {
+        this.insertBefore(newNode, referenceNode.nextSibling);
+    };
 
     // Re-initialize on dynamic content changes (for AJAX pagination)
     window.reinitializePagination = function() {
         // Remove existing ellipsis and classes
-        $(".before-dots, .after-dots").remove();
-        $(".page-num-btn").show().removeClass('first-page-btn last-page-btn active');
+        const dots = document.querySelectorAll('.before-dots, .after-dots');
+        dots.forEach(function(dot) {
+            dot.remove();
+        });
+
+        // Show all hidden buttons and remove classes
+        const pageButtons = document.querySelectorAll('.page-num-btn');
+        pageButtons.forEach(function(button) {
+            button.style.display = '';
+            button.classList.remove('first-page-btn', 'last-page-btn', 'active');
+        });
 
         // Re-initialize
         initializePagination();
     };
 
-})(jQuery);
+})();

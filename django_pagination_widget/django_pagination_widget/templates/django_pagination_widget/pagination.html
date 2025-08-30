@@ -5,7 +5,9 @@
             <a class="page-change-btn back-btn"
                href="?page={{ page_obj.previous_page_number }}"
                aria-label="Go to previous page">
-                <i class="material-icons" aria-hidden="true">arrow_back_ios</i>
+                <svg class="pagination-icon" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
+                </svg>
             </a>
         {% endif %}
 
@@ -26,7 +28,9 @@
             <a class="page-change-btn next-btn"
                href="?page={{ page_obj.next_page_number }}"
                aria-label="Go to next page">
-                <i class="material-icons" aria-hidden="true">arrow_forward_ios</i>
+                <svg class="pagination-icon" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M8.59 16.59L10 18l6-6-6-6-1.41 1.41L13.17 12z"/>
+                </svg>
             </a>
         {% endif %}
     </div>
@@ -36,10 +40,6 @@
     </span>
 </div>
 
-{# Load Material Icons if not already loaded #}
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
 {# Load pagination styles and scripts #}
 <link rel="stylesheet" href="{% static 'django_pagination_widget/css/pagination.css' %}">
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="{% static 'django_pagination_widget/js/pagination.js' %}"></script>

@@ -5,17 +5,17 @@
 [![Python Versions](https://img.shields.io/badge/Python-3.8%2B-blue.svg)](https://www.python.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-A modern, reusable Django pagination component with Material Design styling and interactive JavaScript behavior. Features smart ellipsis logic, responsive design, and accessibility support.
+A modern, reusable Django pagination component with clean styling and interactive JavaScript behavior. Features smart ellipsis logic, responsive design, and accessibility support with zero external dependencies.
 
 ## ✨ Features
 
-- 🎨 **Material Design**: Clean, modern styling with Material Icons
-- ⚡ **Interactive JavaScript**: Dynamic ellipsis for large page ranges
+- 🎨 **Zero Dependencies**: No external libraries required
+- ⚡ **Vanilla JavaScript**: Lightweight, modern implementation
 - 📱 **Responsive**: Mobile-friendly design with dark theme support
-- ♿ **Accessible**: ARIA labels and semantic HTML
+- ♿ **Accessible**: ARIA labels and semantic HTML with inline SVG icons
 - 🎯 **Easy Integration**: Simple template tags and configuration
 - 🔧 **Customizable**: CSS variables and easy theming
-- 🚀 **Lightweight**: Minimal dependencies (Django + jQuery)
+- 🚀 **Lightweight**: Minimal footprint with inline SVG icons
 
 ## 🚀 Quick Start
 
@@ -133,8 +133,6 @@ Add these to your Django settings for customization:
 
 # Pagination Widget Settings
 PAGINATION_WIDGET = {
-    'MATERIAL_ICONS_URL': 'https://fonts.googleapis.com/icon?family=Material+Icons',
-    'JQUERY_URL': 'https://code.jquery.com/jquery-3.6.0.min.js',
     'ENABLE_DARK_THEME': True,
 }
 ```
@@ -226,9 +224,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 🙏 Acknowledgments
 
-- Material Design Icons by Google
 - Django framework
-- jQuery library
 
 ## 📞 Support
 
