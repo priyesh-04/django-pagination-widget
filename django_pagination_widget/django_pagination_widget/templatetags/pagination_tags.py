@@ -94,3 +94,22 @@ def pagination_js():
     return '<script src="{}django_pagination_widget/js/pagination.js"></script>'.format(
         settings.STATIC_URL
     )
+
+
+@register.simple_tag
+def pagination_custom_css(custom_css_path=None):
+    """
+    Returns a CSS link tag for custom pagination styling.
+
+    Usage:
+        {% load pagination_tags %}
+        {% pagination_custom_css 'my_app/css/custom-pagination.css' %}
+
+    Args:
+        custom_css_path: Path to custom CSS file relative to static root
+    """
+    if custom_css_path:
+        return '<link rel="stylesheet" href="{}">'.format(
+            settings.STATIC_URL + custom_css_path
+        )
+    return ''

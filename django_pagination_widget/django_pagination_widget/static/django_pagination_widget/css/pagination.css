@@ -1,5 +1,19 @@
 /* Django Pagination Widget Styles */
 
+/* CSS Variables for customization */
+:root {
+    --pagination-primary: #007bff;
+    --pagination-success: #28a745;
+    --pagination-text: #666;
+    --pagination-border: #e1e5e9;
+    --pagination-bg: #fff;
+    --pagination-hover-bg: var(--pagination-primary);
+    --pagination-active-bg: var(--pagination-success);
+    --pagination-font-size: 0.875rem;
+    --pagination-border-radius: 0.25rem;
+    --pagination-transition: all 0.2s ease;
+}
+
 .pagination {
     display: flex;
     align-items: center;
@@ -15,8 +29,8 @@
 }
 
 .pagination span.current {
-    color: #666;
-    font-size: 0.875rem;
+    color: var(--pagination-text);
+    font-size: var(--pagination-font-size);
     font-weight: 500;
     margin-left: auto;
 }
@@ -25,29 +39,29 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    background: #fff;
-    color: #666;
-    border: 1px solid #e1e5e9;
+    background: var(--pagination-bg);
+    color: var(--pagination-text);
+    border: 1px solid var(--pagination-border);
     padding: 0.5rem 0.75rem;
     margin: 0 0.25rem 0.5rem 0;
-    font-size: 0.875rem;
+    font-size: var(--pagination-font-size);
     text-decoration: none;
-    border-radius: 0.25rem;
-    transition: all 0.2s ease;
+    border-radius: var(--pagination-border-radius);
+    transition: var(--pagination-transition);
     min-width: 2.5rem;
     height: 2.5rem;
 }
 
 .page-change-btn:hover {
-    border-color: #007bff;
-    background: #007bff;
+    border-color: var(--pagination-primary);
+    background: var(--pagination-hover-bg);
     color: #fff;
     text-decoration: none;
 }
 
 .page-change-btn.active {
-    border-color: #28a745;
-    background: #28a745;
+    border-color: var(--pagination-success);
+    background: var(--pagination-active-bg);
     color: #fff;
     font-weight: 500;
 }
@@ -103,10 +117,16 @@
 
 /* Dark theme support */
 @media (prefers-color-scheme: dark) {
+    :root {
+        --pagination-text: #e2e8f0;
+        --pagination-border: #4a5568;
+        --pagination-bg: #2d3748;
+    }
+
     .page-change-btn {
-        background: #2d3748;
-        color: #e2e8f0;
-        border-color: #4a5568;
+        background: var(--pagination-bg);
+        color: var(--pagination-text);
+        border-color: var(--pagination-border);
     }
 
     .page-change-btn:hover {
