@@ -1,6 +1,6 @@
 # Django Pagination Widget
-# A reusable Django pagination component with Material Design styling
+# A reusable Django pagination component with modern, clean styling
 
 __version__ = "0.1.0"
-__author__ = "Your Name"
-__email__ = "your.email@example.com"
+__author__ = "Priyesh Shukla"
+__email__ = "priyesh.shukla070@gmail.com"

@@ -14,34 +14,42 @@
     }
 
     function initializePagination() {
-        // Add classes to first and last page buttons
-        const pageButtons = document.querySelectorAll('.page-num-btn');
+        // Initialize each pagination widget separately
+        const paginationWidgets = document.querySelectorAll('.pagination');
+        paginationWidgets.forEach(function(widget) {
+            initializeWidget(widget);
+        });
+    }
+
+    function initializeWidget(widget) {
+        // Add classes to first and last page buttons within this widget
+        const pageButtons = widget.querySelectorAll('.page-num-btn');
         if (pageButtons.length > 0) {
             pageButtons[0].classList.add('first-page-btn');
             pageButtons[pageButtons.length - 1].classList.add('last-page-btn');
         }
 
-        // Set active page based on current URL
-        setActivePage();
+        // Set active page based on current URL for this widget
+        setActivePage(widget);
 
-        // Apply ellipsis logic
-        applyEllipsis();
+        // Apply ellipsis logic for this widget
+        applyEllipsis(widget);
     }
 
-    function setActivePage() {
+    function setActivePage(widget) {
         const currentSearch = window.location.search;
 
         // If no query parameters, activate first page
         if (currentSearch === '' || currentSearch === '?page=1') {
-            const firstButton = document.querySelector('.page-num-btn');
+            const firstButton = widget.querySelector('.page-num-btn');
             if (firstButton) {
                 firstButton.classList.add('active');
             }
             return;
         }
 
-        // Find and activate the current page button
-        const pageButtons = document.querySelectorAll('.page-num-btn');
+        // Find and activate the current page button within this widget
+        const pageButtons = widget.querySelectorAll('.page-num-btn');
         pageButtons.forEach(function(button) {
             if (button.getAttribute('href') === currentSearch) {
                 button.classList.add('active');
@@ -49,17 +57,17 @@
         });
     }
 
-    function applyEllipsis() {
-        const activeBtn = document.querySelector('.page-num-btn.active');
+    function applyEllipsis(widget) {
+        const activeBtn = widget.querySelector('.page-num-btn.active');
         if (!activeBtn) return;
 
-        const pageButtons = document.querySelectorAll('.page-num-btn');
+        const pageButtons = widget.querySelectorAll('.page-num-btn');
         const totalPages = pageButtons.length;
 
         // Only apply ellipsis if we have more than 7 pages
         if (totalPages <= 7) return;
 
-        // Find the index of the active button
+        // Find the index of the active button within this widget
         let activeIndex = -1;
         pageButtons.forEach(function(button, index) {
             if (button.classList.contains('active')) {
@@ -82,30 +90,30 @@
             ellipsisSpan.className = 'page-change-btn after-dots';
             ellipsisSpan.textContent = '…';
             ellipsisSpan.setAttribute('aria-hidden', 'true');
-            activeBtn.parentNode.insertAfter(ellipsisSpan, activeBtn);
+            insertAfter(ellipsisSpan, activeBtn);
         }
 
         // Hide buttons between ellipsis and boundaries
-        hideButtonsBetweenEllipsis();
+        hideButtonsBetweenEllipsis(widget);
     }
 
-    function hideButtonsBetweenEllipsis() {
-        const beforeDots = document.querySelector('.before-dots');
-        const afterDots = document.querySelector('.after-dots');
+    function hideButtonsBetweenEllipsis(widget) {
+        const beforeDots = widget.querySelector('.before-dots');
+        const afterDots = widget.querySelector('.after-dots');
 
         // Hide buttons before the "before-dots"
         if (beforeDots) {
-            hideElementsBetween(beforeDots, '.first-page-btn', 'previous');
+            hideElementsBetween(widget, beforeDots, '.first-page-btn', 'previous');
         }
 
         // Hide buttons after the "after-dots"
         if (afterDots) {
-            hideElementsBetween(afterDots, '.last-page-btn', 'next');
+            hideElementsBetween(widget, afterDots, '.last-page-btn', 'next');
         }
     }
 
-    function hideElementsBetween(referenceElement, boundarySelector, direction) {
-        const boundary = document.querySelector(boundarySelector);
+    function hideElementsBetween(widget, referenceElement, boundarySelector, direction) {
+        const boundary = widget.querySelector(boundarySelector);
         if (!boundary) return;
 
         let currentElement = referenceElement;
@@ -134,27 +142,30 @@
         });
     }
 
-    // Utility function to insert after element (since insertAfter doesn't exist)
-    Element.prototype.insertAfter = function(newNode, referenceNode) {
-        this.insertBefore(newNode, referenceNode.nextSibling);
-    };
+    // Utility function to insert after element
+    function insertAfter(newNode, referenceNode) {
+        referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
+    }
 
     // Re-initialize on dynamic content changes (for AJAX pagination)
     window.reinitializePagination = function() {
-        // Remove existing ellipsis and classes
-        const dots = document.querySelectorAll('.before-dots, .after-dots');
-        dots.forEach(function(dot) {
-            dot.remove();
+        // Remove existing ellipsis and classes from all widgets
+        const paginationWidgets = document.querySelectorAll('.pagination');
+        paginationWidgets.forEach(function(widget) {
+            const dots = widget.querySelectorAll('.before-dots, .after-dots');
+            dots.forEach(function(dot) {
+                dot.remove();
+            });
+
+            // Show all hidden buttons and remove classes
+            const pageButtons = widget.querySelectorAll('.page-num-btn');
+            pageButtons.forEach(function(button) {
+                button.style.display = '';
+                button.classList.remove('first-page-btn', 'last-page-btn', 'active');
+            });
         });
 
-        // Show all hidden buttons and remove classes
-        const pageButtons = document.querySelectorAll('.page-num-btn');
-        pageButtons.forEach(function(button) {
-            button.style.display = '';
-            button.classList.remove('first-page-btn', 'last-page-btn', 'active');
-        });
-
-        // Re-initialize
+        // Re-initialize all widgets
         initializePagination();
     };
 

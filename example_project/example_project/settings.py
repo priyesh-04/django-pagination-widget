@@ -15,6 +15,7 @@ SECRET_KEY = 'django-insecure-example-key-change-in-production'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+# settings.py
 
 ALLOWED_HOSTS = ['testserver', '127.0.0.1', 'localhost']
 

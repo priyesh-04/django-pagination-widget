@@ -1,6 +1,8 @@
 from django import template
 from django.template.loader import get_template
 from django.conf import settings
+from django.templatetags.static import static
+from django.utils.safestring import mark_safe
 
 register = template.Library()
 
@@ -77,9 +79,8 @@ def pagination_css():
         {% load pagination_tags %}
         {% pagination_css %}
     """
-    return '<link rel="stylesheet" href="{}django_pagination_widget/css/pagination.css">'.format(
-        settings.STATIC_URL
-    )
+    href = static('django_pagination_widget/css/pagination.css')
+    return mark_safe(f'<link rel="stylesheet" href="{href}">')
 
 
 @register.simple_tag
@@ -91,9 +92,8 @@ def pagination_js():
         {% load pagination_tags %}
         {% pagination_js %}
     """
-    return '<script src="{}django_pagination_widget/js/pagination.js"></script>'.format(
-        settings.STATIC_URL
-    )
+    src = static('django_pagination_widget/js/pagination.js')
+    return mark_safe(f'<script src="{src}"></script>')
 
 
 @register.simple_tag
@@ -109,7 +109,6 @@ def pagination_custom_css(custom_css_path=None):
         custom_css_path: Path to custom CSS file relative to static root
     """
     if custom_css_path:
-        return '<link rel="stylesheet" href="{}">'.format(
-            settings.STATIC_URL + custom_css_path
-        )
+        href = static(custom_css_path)
+        return mark_safe(f'<link rel="stylesheet" href="{href}">')
     return ''

@@ -1,120 +1,283 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Django Pagination Widget Demo</title>
-    <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: #333;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #f8f9fa;
-        }
-        .container {
-            background: white;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-        h1 {
-            color: #2c3e50;
-            text-align: center;
-            margin-bottom: 30px;
-        }
-        .item {
-            background: #f8f9fa;
-            padding: 15px;
-            margin: 10px 0;
-            border-radius: 5px;
-            border-left: 4px solid #007bff;
-        }
-        .item h3 {
-            margin: 0 0 5px 0;
-            color: #007bff;
-        }
-        .item p {
-            margin: 5px 0;
-            color: #666;
-        }
-        .demo-info {
-            background: #e3f2fd;
-            padding: 20px;
-            border-radius: 5px;
-            margin: 20px 0;
-            border-left: 4px solid #2196f3;
-        }
-        .code-block {
-            background: #f5f5f5;
-            padding: 15px;
-            border-radius: 5px;
-            font-family: 'Courier New', monospace;
-            margin: 10px 0;
-            overflow-x: auto;
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <h1>🎯 Django Pagination Widget Demo</h1>
 
-        <div class="demo-info">
-            <h3>📖 About This Demo</h3>
-            <p>This page demonstrates the Django Pagination Widget in action. The widget provides:</p>
-            <ul>
-                <li>✅ Material Design styling</li>
-                <li>✅ Interactive JavaScript behavior</li>
-                <li>✅ Smart ellipsis for large page ranges</li>
-                <li>✅ Responsive design</li>
-                <li>✅ Accessibility features</li>
-            </ul>
-        </div>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Django Pagination Widget Demo</title>
+    {% load static pagination_tags %}
+    {% pagination_custom_css 'css/pagination_widget.css' %}
+        <style>
+            body {
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                line-height: 1.6;
+                color: #333;
+                max-width: 800px;
+                margin: 0 auto;
+                padding: 20px;
+                background-color: #f8f9fa;
+            }
 
-        <h2>📋 Items (Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }})</h2>
+            .container {
+                background: white;
+                padding: 30px;
+                border-radius: 8px;
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            }
 
-        {% for item in items %}
-        <div class="item">
-            <h3>{{ item.name }}</h3>
-            <p><strong>Created:</strong> {{ item.created_at|date:"M d, Y H:i" }}</p>
-            <p><strong>ID:</strong> {{ item.id }}</p>
-        </div>
-        {% endfor %}
+            h1 {
+                color: #2c3e50;
+                text-align: center;
+                margin-bottom: 30px;
+            }
 
-        <!-- Django Pagination Widget -->
-        {% load pagination_tags %}
-        {% pagination_widget page_obj %}
+            .item {
+                background: #f8f9fa;
+                padding: 15px;
+                margin: 10px 0;
+                border-radius: 5px;
+                border-left: 4px solid #007bff;
+            }
 
-        <div class="demo-info">
-            <h3>💡 Usage Example</h3>
-            <p>In your Django templates, simply use:</p>
-            <div class="code-block">
-{% verbatim %}
-{% load pagination_tags %}
-{% pagination_widget page_obj %}
-{% endverbatim %}
+            .item h3 {
+                margin: 0 0 5px 0;
+                color: #007bff;
+            }
+
+            .item p {
+                margin: 5px 0;
+                color: #666;
+            }
+
+            .demo-info {
+                background: #e3f2fd;
+                padding: 20px;
+                border-radius: 5px;
+                margin: 20px 0;
+                border-left: 4px solid #2196f3;
+            }
+
+            .code-block {
+                background: #f5f5f5;
+                padding: 15px;
+                border-radius: 5px;
+                font-family: 'Courier New', monospace;
+                margin: 10px 0;
+                overflow-x: auto;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class="container">
+            <h1>🎯 Django Pagination Widget Demo</h1>
+
+            <div class="demo-info">
+                <h3>📖 About This Demo</h3>
+                <p>This page demonstrates the Django Pagination Widget in action. The widget provides:</p>
+                <ul>
+                    <li>✅ Modern, clean styling</li>
+                    <li>✅ Interactive JavaScript behavior</li>
+                    <li>✅ Smart ellipsis for large page ranges</li>
+                    <li>✅ Responsive design</li>
+                    <li>✅ Accessibility features</li>
+                </ul>
             </div>
 
-            <p>Or with a custom page range:</p>
-            <div class="code-block">
-{% verbatim %}
-{% pagination_widget page_obj custom_page_range %}
-{% endverbatim %}
+            <h2>📋 Items (Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }})</h2>
+
+            {% for item in items %}
+            <div class="item">
+                <h3>{{ item.name }}</h3>
+                <p><strong>Created:</strong> {{ item.created_at|date:"M d, Y H:i" }}</p>
+                <p><strong>ID:</strong> {{ item.id }}</p>
+            </div>
+            {% endfor %}
+
+            <!-- Django Pagination Widget -->
+            {# tag library already loaded in <head> #}
+            {% pagination_widget page_obj %}
+
+            <div class="demo-info">
+                <h3>🎨 Customization Examples</h3>
+                <p>Try these different themes by adding CSS classes to the pagination widget:</p>
+
+                <h4>🌙 Dark Theme</h4>
+                <div class="code-block">
+                    {% verbatim %}
+                    <div class="pagination dark-theme">
+                        {% pagination_widget page_obj %}
+                    </div>
+                    {% endverbatim %}
+                </div>
+                <div class="pagination dark-theme"
+                    style="margin: 10px 0; padding: 15px; background: #1f2937; border-radius: 5px;">
+                    {% pagination_widget page_obj %}
+                </div>
+
+                <h4>💚 Green Brand Theme</h4>
+                <div class="code-block">
+                    {% verbatim %}
+                    <div class="pagination green-theme">
+                        {% pagination_widget page_obj %}
+                    </div>
+                    {% endverbatim %}
+                </div>
+                <div class="pagination green-theme" style="margin: 10px 0;">
+                    {% pagination_widget page_obj %}
+                </div>
+
+                <h4>💜 Purple Theme</h4>
+                <div class="code-block">
+                    {% verbatim %}
+                    <div class="pagination purple-theme">
+                        {% pagination_widget page_obj %}
+                    </div>
+                    {% endverbatim %}
+                </div>
+                <div class="pagination purple-theme" style="margin: 10px 0;">
+                    {% pagination_widget page_obj %}
+                </div>
+
+                <h4>🔸 Compact Design</h4>
+                <div class="code-block">
+                    {% verbatim %}
+                    <div class="pagination compact">
+                        {% pagination_widget page_obj %}
+                    </div>
+                    {% endverbatim %}
+                </div>
+                <div class="pagination compact" style="margin: 10px 0;">
+                    {% pagination_widget page_obj %}
+                </div>
+
+                <h4>📏 Large Design</h4>
+                <div class="code-block">
+                    {% verbatim %}
+                    <div class="pagination large">
+                        {% pagination_widget page_obj %}
+                    </div>
+                    {% endverbatim %}
+                </div>
+                <div class="pagination large" style="margin: 10px 0;">
+                    {% pagination_widget page_obj %}
+                </div>
+
+                <h4>🎯 Rounded/Pill Style</h4>
+                <div class="code-block">
+                    {% verbatim %}
+                    <div class="pagination rounded">
+                        {% pagination_widget page_obj %}
+                    </div>
+                    {% endverbatim %}
+                </div>
+                <div class="pagination rounded" style="margin: 10px 0;">
+                    {% pagination_widget page_obj %}
+                </div>
+
+                <h4>⚪ Minimal/Outlined Style</h4>
+                <div class="code-block">
+                    {% verbatim %}
+                    <div class="pagination minimal">
+                        {% pagination_widget page_obj %}
+                    </div>
+                    {% endverbatim %}
+                </div>
+                <div class="pagination minimal" style="margin: 10px 0;">
+                    {% pagination_widget page_obj %}
+                </div>
+
+                <h4>🌈 Gradient Theme</h4>
+                <div class="code-block">
+                    {% verbatim %}
+                    <div class="pagination gradient">
+                        {% pagination_widget page_obj %}
+                    </div>
+                    {% endverbatim %}
+                </div>
+                <div class="pagination gradient" style="margin: 10px 0;">
+                    {% pagination_widget page_obj %}
+                </div>
+
+                <h4>🔥 Warm Theme (Orange)</h4>
+                <div class="code-block">
+                    {% verbatim %}
+                    <div class="pagination warm-theme">
+                        {% pagination_widget page_obj %}
+                    </div>
+                    {% endverbatim %}
+                </div>
+                <div class="pagination warm-theme" style="margin: 10px 0;">
+                    {% pagination_widget page_obj %}
+                </div>
+
+                <h4>❄️ Cool Theme (Cyan)</h4>
+                <div class="code-block">
+                    {% verbatim %}
+                    <div class="pagination cool-theme">
+                        {% pagination_widget page_obj %}
+                    </div>
+                    {% endverbatim %}
+                </div>
+                <div class="pagination cool-theme" style="margin: 10px 0;">
+                    {% pagination_widget page_obj %}
+                </div>
+
+                <h4>⚫ High Contrast (Accessibility)</h4>
+                <div class="code-block">
+                    {% verbatim %}
+                    <div class="pagination high-contrast">
+                        {% pagination_widget page_obj %}
+                    </div>
+                    {% endverbatim %}
+                </div>
+                <div class="pagination high-contrast" style="margin: 10px 0;">
+                    {% pagination_widget page_obj %}
+                </div>
+
+                <h4>🎨 Monochrome Theme</h4>
+                <div class="code-block">
+                    {% verbatim %}
+                    <div class="pagination monochrome">
+                        {% pagination_widget page_obj %}
+                    </div>
+                    {% endverbatim %}
+                </div>
+                <div class="pagination monochrome" style="margin: 10px 0;">
+                    {% pagination_widget page_obj %}
+                </div>
+            </div>
+
+            <div class="demo-info">
+                <h3>💡 Usage Example</h3>
+                <p>In your Django templates, simply use:</p>
+                <div class="code-block">
+                    {% verbatim %}
+                    {% load pagination_tags %}
+                    {% pagination_widget page_obj %}
+                    {% endverbatim %}
+                </div>
+
+                <p>Or with a custom page range:</p>
+                <div class="code-block">
+                    {% verbatim %}
+                    {% pagination_widget page_obj custom_page_range %}
+                    {% endverbatim %}
+                </div>
+            </div>
+
+            <div class="demo-info">
+                <h3>🔧 Features Demonstrated</h3>
+                <ul>
+                    <li><strong>Smart Ellipsis:</strong> Notice how page numbers are hidden with "…" when there are many
+                        pages</li>
+                    <li><strong>Active State:</strong> Current page is highlighted</li>
+                    <li><strong>Navigation:</strong> Previous/Next buttons with inline SVG icons</li>
+                    <li><strong>Responsive:</strong> Try resizing your browser window</li>
+                    <li><strong>Accessibility:</strong> Proper ARIA labels and semantic HTML</li>
+                </ul>
             </div>
         </div>
+    </body>
 
-        <div class="demo-info">
-            <h3>🔧 Features Demonstrated</h3>
-            <ul>
-                <li><strong>Smart Ellipsis:</strong> Notice how page numbers are hidden with "…" when there are many pages</li>
-                <li><strong>Active State:</strong> Current page is highlighted</li>
-                <li><strong>Navigation:</strong> Previous/Next buttons with Material Icons</li>
-                <li><strong>Responsive:</strong> Try resizing your browser window</li>
-                <li><strong>Accessibility:</strong> Proper ARIA labels and semantic HTML</li>
-            </ul>
-        </div>
-    </div>
-</body>
 </html>

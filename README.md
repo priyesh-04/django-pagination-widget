@@ -1,8 +1,8 @@
 # Django Pagination Widget
 
 [![PyPI version](https://badge.fury.io/py/django-pagination-widget.svg)](https://pypi.org/project/django-pagination-widget/)
-[![Django Versions](https://img.shields.io/badge/Django-3.2%2B-blue.svg)](https://www.djangoproject.com/)
-[![Python Versions](https://img.shields.io/badge/Python-3.8%2B-blue.svg)](https://www.python.org/)
+[![Django Versions](https://img.shields.io/badge/Django-4.2%2B-blue.svg)](https://www.djangoproject.com/)
+[![Python Versions](https://img.shields.io/badge/Python-3.9%2B-blue.svg)](https://www.python.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 A modern, reusable Django pagination component with clean styling and interactive JavaScript behavior. Features smart ellipsis logic, responsive design, and accessibility support with zero external dependencies.
@@ -50,6 +50,17 @@ INSTALLED_APPS = [
 {% include 'django_pagination_widget/pagination.html' %}
 ```
 
+Note: the included template already links the core CSS and JS. If you prefer to load assets once (e.g., in base.html), use the tags below in your layout and then call only the widget where needed:
+
+```html
+{% load pagination_tags %}
+<!-- In base.html head -->
+{% pagination_css %}
+{% pagination_js %}
+<!-- Later in a page template -->
+{% pagination_widget page_obj %}
+```
+
 ### 4. Usage in Views
 
 ```python
@@ -69,9 +80,26 @@ def my_view(request):
 
 ## 📖 Template Tags
 
+### `pagination_custom_css`
+
+Returns a CSS link tag for custom pagination styling.
+
+```html
+{% pagination_custom_css 'my_app/css/pagination_widget.css' %}
+```
+
+**Parameters:**
+- `custom_css_path`: Path to custom CSS file relative to static root (optional)
+
+You can also reference a non-app-namespaced path under your STATICFILES dirs, e.g.:
+
+```html
+{% pagination_custom_css 'css/pagination_widget.css' %}
+```
+
 ### `pagination_widget`
 
-Renders the complete pagination component.
+Renders the complete pagination component with automatic CSS and JS inclusion.
 
 ```html
 {% pagination_widget page_obj page_range %}
@@ -97,63 +125,24 @@ Returns JavaScript script tag for manual inclusion.
 {% pagination_js %}
 ```
 
-## 🎨 Customization
+### Custom CSS Integration
 
-### CSS Variables
-
-Override these variables to customize the appearance:
-
-```css
-:root {
-    --pagination-primary: #007bff;
-    --pagination-success: #28a745;
-    --pagination-text: #666;
-    --pagination-border: #e1e5e9;
-    --pagination-bg: #fff;
-}
-```
-
-### Custom Styling
-
-Create your own CSS file and load it after the default styles:
+Create a custom CSS file and include it:
 
 ```html
-<link rel="stylesheet" href="{% static 'django_pagination_widget/css/pagination.css' %}">
-<link rel="stylesheet" href="{% static 'my_app/css/custom-pagination.css' %}">
+<!-- In your template -->
+{% load pagination_tags %}
+{% pagination_custom_css 'my_app/css/pagination_widget.css' %}
+{% pagination_widget page_obj %}
 ```
 
-## 🔧 Configuration
-
-### Settings
-
-Add these to your Django settings for customization:
-
-```python
-# settings.py
-
-# Pagination Widget Settings
-PAGINATION_WIDGET = {
-    'ENABLE_DARK_THEME': True,
-}
-```
-
-## 📱 Responsive Design
+## Responsive Design
 
 The component automatically adapts to different screen sizes:
 
 - **Desktop**: Full pagination with ellipsis
 - **Tablet**: Condensed layout
 - **Mobile**: Simplified navigation
-
-## 🌙 Dark Theme Support
-
-Automatic dark theme detection using `prefers-color-scheme`:
-
-```css
-@media (prefers-color-scheme: dark) {
-    /* Automatic dark theme styles */
-}
-```
 
 ## ♿ Accessibility
 
@@ -166,6 +155,9 @@ Automatic dark theme detection using `prefers-color-scheme`:
 ## 🧪 Testing
 
 ```bash
+# From the package directory
+cd django_pagination_widget
+
 # Run tests
 python -m pytest
 
@@ -178,8 +170,10 @@ python -m pytest --cov=django_pagination_widget
 ### Setup Development Environment
 
 ```bash
-git clone https://github.com/yourusername/django-pagination-widget.git
+git clone https://github.com/priyesh-04/django-pagination-widget.git
 cd django-pagination-widget
+# Work inside the package subdirectory for editable installs
+cd django_pagination_widget
 pip install -e .
 pip install -r requirements-dev.txt
 ```
@@ -220,16 +214,12 @@ django_pagination_widget/
 
 ## 📄 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 🙏 Acknowledgments
-
-- Django framework
+This project is licensed under the MIT License - see the [LICENSE](django_pagination_widget/LICENSE) file for details.
 
 ## 📞 Support
 
-- 📧 Email: your.email@example.com
-- 🐛 Issues: [GitHub Issues](https://github.com/yourusername/django-pagination-widget/issues)
+- 📧 Email: [Send Message](priyesh.shukla070@gmail.com)
+- 🐛 Issues: [GitHub Issues](https://github.com/priyesh-04/django-pagination-widget/issues)
 - 📖 Documentation: [Read the Docs](https://django-pagination-widget.readthedocs.io/)
 
 ---

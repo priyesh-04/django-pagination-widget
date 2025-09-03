@@ -108,21 +108,21 @@ def test_pagination_navigation():
 
 
 def test_pagination_css_tag():
-    """Test pagination_css template tag"""
+    """Test pagination_css template tag returns safe link tag"""
     template = Template("{% load pagination_tags %}{% pagination_css %}")
     rendered = template.render(Context())
 
     assert 'django_pagination_widget/css/pagination.css' in rendered
-    assert '&lt;link' in rendered  # Django escapes HTML by default
+    assert '<link' in rendered  # Now marked safe
 
 
 def test_pagination_js_tag():
-    """Test pagination_js template tag"""
+    """Test pagination_js template tag returns safe script tag"""
     template = Template("{% load pagination_tags %}{% pagination_js %}")
     rendered = template.render(Context())
 
     assert 'django_pagination_widget/js/pagination.js' in rendered
-    assert '&lt;script' in rendered  # Django escapes HTML by default
+    assert '<script' in rendered  # Now marked safe
 
 
 def test_template_tags_import():
