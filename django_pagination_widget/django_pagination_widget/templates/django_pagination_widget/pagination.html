@@ -40,6 +40,8 @@
     </span>
 </div>
 
-{# Load pagination styles and scripts #}
+{# Load pagination styles and scripts conditionally #}
+{% if include_assets %}
 <link rel="stylesheet" href="{% static 'django_pagination_widget/css/pagination.css' %}">
 <script src="{% static 'django_pagination_widget/js/pagination.js' %}"></script>
+{% endif %}

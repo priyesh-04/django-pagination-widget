@@ -59,6 +59,20 @@ Note: the included template already links the core CSS and JS. If you prefer to 
 {% pagination_js %}
 <!-- Later in a page template -->
 {% pagination_widget page_obj %}
+
+You can also opt into a “bare” render that skips auto-including assets:
+
+```html
+{% pagination_widget page_obj include_assets=False %}
+```
+
+To make “bare” the global default, add this to your settings:
+
+```python
+PAGINATION_WIDGET = {
+    "INCLUDE_ASSETS_BY_DEFAULT": False,
+}
+```
 ```
 
 ### 4. Usage in Views
@@ -108,6 +122,7 @@ Renders the complete pagination component with automatic CSS and JS inclusion.
 **Parameters:**
 - `page_obj`: Django's Page object (required)
 - `page_range`: List of page numbers to display (optional)
+- `include_assets`: bool to control whether the widget includes its CSS/JS. Defaults to True or to settings.PAGINATION_WIDGET['INCLUDE_ASSETS_BY_DEFAULT'] if provided.
 
 ### `pagination_css`
 

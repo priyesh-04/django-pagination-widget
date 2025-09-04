@@ -136,5 +136,41 @@ def test_template_tags_import():
 def test_package_structure():
     """Test that package structure is correct"""
     import django_pagination_widget
-    assert django_pagination_widget.__version__ == "0.1.0"
+    assert django_pagination_widget.__version__ == "0.1.1"
     assert django_pagination_widget.__author__ is not None
+
+
+def test_include_assets_can_be_disabled_via_settings(monkeypatch):
+    """When INCLUDE_ASSETS_BY_DEFAULT is False, assets should not render unless overridden."""
+    # Configure setting to disable assets by default
+    monkeypatch.setattr(settings, 'PAGINATION_WIDGET', {'INCLUDE_ASSETS_BY_DEFAULT': False}, raising=False)
+
+    page_obj = MockPageObj()
+    context = Context({'page_obj': page_obj})
+    template = Template("""
+        {% load pagination_tags %}
+        {% pagination_widget page_obj %}
+    """)
+    rendered = template.render(context)
+
+    # Assets should NOT be present
+    assert 'django_pagination_widget/css/pagination.css' not in rendered
+    assert 'django_pagination_widget/js/pagination.js' not in rendered
+
+
+def test_include_assets_override_true(monkeypatch):
+    """Explicit include_assets=True should render assets regardless of settings default."""
+    # Disable by default in settings
+    monkeypatch.setattr(settings, 'PAGINATION_WIDGET', {'INCLUDE_ASSETS_BY_DEFAULT': False}, raising=False)
+
+    page_obj = MockPageObj()
+    context = Context({'page_obj': page_obj})
+    template = Template("""
+        {% load pagination_tags %}
+        {% pagination_widget page_obj include_assets=True %}
+    """)
+    rendered = template.render(context)
+
+    # Assets should be present due to explicit True
+    assert 'django_pagination_widget/css/pagination.css' in rendered
+    assert 'django_pagination_widget/js/pagination.js' in rendered

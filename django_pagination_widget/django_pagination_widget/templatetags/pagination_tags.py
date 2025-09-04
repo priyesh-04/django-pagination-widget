@@ -8,7 +8,7 @@ register = template.Library()
 
 
 @register.inclusion_tag('django_pagination_widget/pagination.html', takes_context=True)
-def pagination_widget(context, page_obj, page_range=None):
+def pagination_widget(context, page_obj, page_range=None, include_assets=None):
     """
     Renders the pagination widget with smart ellipsis logic.
 
@@ -24,10 +24,18 @@ def pagination_widget(context, page_obj, page_range=None):
         # Smart pagination range with ellipsis to avoid FOUC
         page_range = get_smart_page_range(page_obj)
 
+    # Determine include_assets default via settings, overridable per-call
+    if include_assets is None:
+        cfg = getattr(settings, 'PAGINATION_WIDGET', {})
+        include_assets_val = bool(cfg.get('INCLUDE_ASSETS_BY_DEFAULT', True))
+    else:
+        include_assets_val = bool(include_assets)
+
     return {
         'page_obj': page_obj,
         'page_range': page_range,
         'request': context.get('request'),
+        'include_assets': include_assets_val,
     }
 
 

@@ -33,12 +33,23 @@ INSTALLED_APPS = [
 {% pagination_css %}
 {% pagination_js %}
 {% pagination_widget page_obj %}
+
+<!-- Or render the widget “bare” (skip auto-included assets) -->
+{% pagination_widget page_obj include_assets=False %}
 ```
 
 Optional: include your own theme overrides
 
 ```html
 {% pagination_custom_css 'css/pagination_widget.css' %}
+
+Global default for “bare” mode (optional):
+
+```python
+PAGINATION_WIDGET = {
+	"INCLUDE_ASSETS_BY_DEFAULT": False,
+}
+```
 ```
 
 ## Links
