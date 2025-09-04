@@ -1,4 +1,4 @@
-Django>=4.2
+Django>=5.2
 # Add the local package for development
 -e ../django_pagination_widget
 tzdata; platform_system=="Windows"

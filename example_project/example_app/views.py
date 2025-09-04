@@ -13,9 +13,6 @@ def item_list(request):
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
-    # No need to manually create page_range - the template tag handles it smartly!
-    # This avoids FOUC and renders only necessary buttons with proper ellipsis
-
     context = {
         'page_obj': page_obj,
         'items': page_obj,  # For template iteration
