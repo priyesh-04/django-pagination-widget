@@ -2,7 +2,7 @@
 
 A modern, zero-dependency Django pagination component with clean styling, accessible markup, and a tiny vanilla-JS helper for smart ellipsis.
 
-Supports: Django 4.2+ · Python 3.9+
+Supports: Django 4.2+ (CI covers 4.2 [LTS], 5.0, 5.1, 5.2 [LTS]) · Python 3.8–3.13
 
 ## Install
 
