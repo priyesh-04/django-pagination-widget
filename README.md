@@ -1,11 +1,16 @@
 # Django Pagination Widget
 
 [![PyPI version](https://badge.fury.io/py/django-pagination-widget.svg)](https://pypi.org/project/django-pagination-widget/)
-[![Django Versions](https://img.shields.io/badge/Django-4.2%2B-blue.svg)](https://www.djangoproject.com/)
-[![Python Versions](https://img.shields.io/badge/Python-3.9%2B-blue.svg)](https://www.python.org/)
+[![Django Versions](https://img.shields.io/badge/Django-4.2%E2%80%935.2-blue.svg)](https://www.djangoproject.com/)
+[![Python Versions](https://img.shields.io/badge/Python-3.8%E2%80%933.13-blue.svg)](https://www.python.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-A modern, reusable Django pagination component with clean styling and interactive JavaScript behavior. Features smart ellipsis logic, responsive design, and accessibility support with zero external dependencies.
+A modern, reusable Django pagination component with clean styling and interactive JavaScript behavior. Features smart ellipsis logic, responsive design, and accessibility support with zero external dependencies. Tested on Django 4.2, 5.0, 5.1, 5.2 across Python 3.8–3.13.
+
+## Supported versions
+
+- Django: 4.2 (LTS), 5.0, 5.1, 5.2 (LTS)
+- Python: 3.8, 3.9, 3.10, 3.11, 3.12, 3.13
 
 ## ✨ Features
 
@@ -191,6 +196,23 @@ cd django-pagination-widget
 cd django_pagination_widget
 pip install -e .
 pip install -r requirements-dev.txt
+```
+
+### Run the example project locally
+
+The example project installs the local package in editable mode via its `requirements.txt`:
+
+```
+-e ../django_pagination_widget
+```
+
+Quick start:
+
+```bash
+cd ../example_project
+pip install -r requirements.txt
+python manage.py migrate
+python manage.py runserver
 ```
 
 ### Project Structure
