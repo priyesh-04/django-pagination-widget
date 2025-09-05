@@ -2,7 +2,7 @@
 
 ![CI](https://github.com/priyesh-04/django-pagination-widget/actions/workflows/ci.yml/badge.svg)
 
-[![PyPI version](https://badge.fury.io/py/django-pagination-widget.svg)](https://pypi.org/project/django-pagination-widget/)
+[![PyPI version](https://img.shields.io/pypi/v/django-pagination-widget.svg)](https://pypi.org/project/django-pagination-widget/)
 [![Django Versions](https://img.shields.io/badge/Django-4.2%E2%80%935.2-blue.svg)](https://www.djangoproject.com/)
 [![Python Versions](https://img.shields.io/badge/Python-3.8%E2%80%933.13-blue.svg)](https://www.python.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
