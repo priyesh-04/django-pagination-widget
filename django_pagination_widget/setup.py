@@ -8,7 +8,7 @@ with open(os.path.join(this_directory, 'README.md'), encoding='utf-8') as f:
 
 setup(
     name='django-pagination-widget',
-    version='0.1.1',
+    version='0.1.2',
     author='Priyesh Shukla',
     author_email='priyesh.shukla070@gmail.com',
     description='A reusable Django pagination component with modern, clean styling and interactive JavaScript behavior',

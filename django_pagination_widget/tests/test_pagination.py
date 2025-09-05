@@ -136,7 +136,7 @@ def test_template_tags_import():
 def test_package_structure():
     """Test that package structure is correct"""
     import django_pagination_widget
-    assert django_pagination_widget.__version__ == "0.1.1"
+    assert django_pagination_widget.__version__ == "0.1.2"
     assert django_pagination_widget.__author__ is not None
 
 
